@@ -1,0 +1,29 @@
+{% load humanize %}
+<article class="group bg-paper rounded-2xl border border-line hover:border-scrub hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
+  <a href="{{ product.get_absolute_url }}" class="block overflow-hidden aspect-square bg-scrub-light relative">
+    {% if product.main_image %}
+      <img src="{{ product.main_image.url }}" alt="{{ product.name }}"
+           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+    {% else %}
+       <div class="w-full h-full flex items-center justify-center text-scrub/40" aria-hidden="true">
+         <svg class="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M5 7h14v3H5z"/></svg>
+       </div>
+    {% endif %}
+    {% if product.category %}
+      <span class="absolute top-2.5 left-2.5 text-[9px] sm:text-[10px] font-mono font-semibold text-ink bg-foam rounded-full px-2 py-1">{{ product.category.name }}</span>
+    {% endif %}
+  </a>
+   <div class="p-3 sm:p-5 flex flex-col flex-1">
+     <h3 class="text-[12px] sm:text-base font-display font-semibold text-ink mb-1 line-clamp-2 leading-snug">
+      <a href="{{ product.get_absolute_url }}" class="hover:text-scrub transition-colors">{{ product.name }}</a>
+    </h3>
+     <p class="text-[10px] sm:text-sm text-ink/50 mb-3 line-clamp-2 flex-1">{{ product.short_description }}</p>
+    <div class="flex items-center justify-between mt-auto">
+       <span class="font-mono text-scrub font-bold text-[11px] sm:text-lg">{{ product.price|floatformat:0|intcomma }} so'm</span>
+    </div>
+    <a href="{{ product.get_absolute_url }}"
+       class="mt-3 sm:mt-4 inline-flex items-center justify-center w-full rounded-full bg-ink text-foam font-semibold text-[10px] sm:text-sm py-2 sm:py-2.5 hover:bg-scrub hover:text-white transition-all duration-300">
+      Batafsil
+    </a>
+  </div>
+</article>

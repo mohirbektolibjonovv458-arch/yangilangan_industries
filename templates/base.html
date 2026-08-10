@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{{ page_title|default:site_settings.site_name }} | {{ site_settings.site_name }}{% endblock %}</title>
+<meta name="description" content="{% block description %}{{ page_description|default:site_settings.meta_description }}{% endblock %}">
+<link rel="icon" href="{% if site_settings.logo %}{{ site_settings.logo.url }}{% else %}{% static 'img/favicon.svg' %}{% endif %}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS (CDN, production loyihalar uchun Tailwind CLI/PostCSS bilan almashtirish mumkin) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          paper: '#FAFAF5',
+          ink: '#16211B',
+          foam: { DEFAULT: '#F2C230', dark: '#DCA916', light: '#FDF3D2' },
+          scrub: { DEFAULT: '#3C6E56', dark: '#2A4F3E', light: '#E7EFE9' },
+          line: '#E4E1D3',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+        borderRadius: {
+          blob: '63% 37% 54% 46% / 45% 51% 49% 55%',
+        },
+        keyframes: {
+          fadeInUp: {
+            '0%': { opacity: 0, transform: 'translateY(16px)' },
+            '100%': { opacity: 1, transform: 'translateY(0)' },
+          },
+          fadeIn: {
+            '0%': { opacity: 0 },
+            '100%': { opacity: 1 },
+          },
+          blobMorph: {
+            '0%, 100%': { borderRadius: '63% 37% 54% 46% / 45% 51% 49% 55%' },
+            '50%': { borderRadius: '40% 60% 43% 57% / 61% 39% 61% 39%' },
+          }
+        },
+        animation: {
+          fadeInUp: 'fadeInUp 0.7s cubic-bezier(.2,.7,.3,1) both',
+          fadeIn: 'fadeIn 0.8s ease-out both',
+          blobMorph: 'blobMorph 10s ease-in-out infinite',
+        }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block extra_head %}{% endblock %}
+</head>
+<body class="bg-paper text-ink font-sans antialiased overflow-x-hidden">
+
+<!-- Loading animatsiyasi -->
+<div id="page-loader" class="fixed inset-0 z-[100] flex items-center justify-center bg-paper transition-opacity duration-500">
+  <div class="flex flex-col items-center gap-3">
+    <div class="w-10 h-10 rounded-full border-[3px] border-scrub/25 border-t-scrub animate-spin"></div>
+    <span class="text-xs text-ink/40 font-mono tracking-wide">yuklanmoqda</span>
+  </div>
+</div>
+
+{% include 'shop/_header.html' %}
+
+<main class="min-h-[60vh]">
+  {% if messages %}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      {% for message in messages %}
+        <div class="mb-3 rounded-xl px-4 py-3 text-sm font-medium border
+          {% if message.tags == 'success' %} bg-scrub-light text-scrub-dark border-scrub/20
+          {% elif message.tags == 'danger' %} bg-red-50 text-red-700 border-red-200
+          {% else %} bg-foam-light text-ink border-foam/30 {% endif %}" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</main>
+
+{% include 'shop/_footer.html' %}
+
+<a href="{% if site_settings.telegram %}https://t.me/{{ site_settings.telegram|cut:'@' }}{% else %}#{% endif %}"
+   target="_blank" rel="noopener"
+   class="fixed bottom-4 right-4 z-40 flex items-center justify-center w-12 h-12 rounded-full bg-ink text-foam shadow-[0_10px_30px_rgba(22,33,27,.28)] hover:bg-scrub hover:text-white hover:scale-110 transition-all duration-300 sm:bottom-6 sm:right-6 sm:w-14 sm:h-14"
+   aria-label="Telegram orqali bog'lanish">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 sm:w-7 sm:h-7">
+    <path d="M21.94 4.11a1.5 1.5 0 0 0-1.6-.2L2.7 11.2a1.4 1.4 0 0 0 .1 2.6l4.53 1.47 1.75 5.6a1.3 1.3 0 0 0 2.14.5l2.6-2.36 4.5 3.3a1.4 1.4 0 0 0 2.2-.83l3.3-15.5a1.5 1.5 0 0 0-.88-1.87ZM9.6 14.9l-1.1 3.5-1-3.3 10.2-8-8.1 7.8Z"/>
+  </svg>
+</a>
+
+<script src="{% static 'js/main.js' %}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

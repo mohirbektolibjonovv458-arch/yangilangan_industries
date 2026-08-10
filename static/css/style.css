@@ -1,0 +1,203 @@
+/* ============================================================
+   SpongeFactory — Custom CSS
+   Tailwind CDN orqali asosiy stillar boshqariladi; bu faylda faqat
+   Tailwind utility klasslari bilan qulay ifodalab bo'lmaydigan
+   qo'shimcha uslublar va animatsiyalar joylashgan.
+
+   Dizayn tili: "foam & scrub" — gubkaning o'zidan olingan
+   sariq (foam) va yashil (scrub) ranglar, organik "blob" shakllar.
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Tailwind form reset: Django widgets inherit the responsive visual language. */
+input, select, textarea {
+  width: 100%;
+  border: 1.5px solid #E4E1D3;
+  border-radius: 0.65rem;
+  background: #fff;
+  color: #16211B;
+  padding: 0.85rem 1rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #3C6E56;
+  box-shadow: 0 0 0 3px rgba(60,110,86,.12);
+}
+textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+/* Navigatsiya linklari (desktop) */
+.nav-link {
+  position: relative;
+  padding: 0.55rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #16211B;
+  opacity: .72;
+  border-radius: 9999px;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+.nav-link:hover {
+  opacity: 1;
+  background-color: #F5F4EC;
+}
+
+/* Mobil menyu linklari */
+.mobile-nav-link {
+  padding: 0.9rem 1rem;
+  border-radius: 0.6rem;
+  font-weight: 500;
+  color: #16211B;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.mobile-nav-link:hover,
+.mobile-nav-link:active {
+  background-color: #F5F4EC;
+}
+
+/* Hamburger animatsiyasi */
+#hamburger-btn.is-open .hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+#hamburger-btn.is-open .hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+#hamburger-btn.is-open .hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Kategoriya chip'lari */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background-color: #F5F4EC;
+  color: #16211B;
+  opacity: .8;
+  border: 1.5px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.chip:hover {
+  opacity: 1;
+  border-color: #E4E1D3;
+}
+.chip-active {
+  background-color: #16211B;
+  color: #F2C230;
+  opacity: 1;
+}
+.chip-active:hover {
+  background-color: #16211B;
+  border-color: transparent;
+}
+
+/* Pagination tugmalari */
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: #16211B;
+  background-color: #fff;
+  border: 1.5px solid #E4E1D3;
+  transition: all 0.2s ease;
+}
+.page-btn:hover {
+  border-color: #3C6E56;
+  color: #3C6E56;
+}
+.page-btn-active {
+  background-color: #16211B;
+  color: #F2C230;
+  border-color: #16211B;
+}
+
+/* Kontakt kartochkalari */
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 1rem;
+  background-color: #fff;
+  border: 1.5px solid #E4E1D3;
+  transition: all 0.25s ease;
+}
+.contact-card:hover {
+  border-color: #3C6E56;
+  transform: translateY(-2px);
+}
+
+/* ---------- Signature element: organik "blob" rasm ramkasi ---------- */
+/* Gubkaning yumshoq, notekis chetlaridan ilhomlangan shakl. */
+.blob-frame {
+  border-radius: 63% 37% 54% 46% / 45% 51% 49% 55%;
+  overflow: hidden;
+}
+@media (max-width: 640px) {
+  .blob-frame {
+    border-radius: 2rem;
+  }
+}
+
+/* Bubble/foam texture — dekorativ orqa fon nuqtalari */
+.bubble-field {
+  background-image: radial-gradient(circle, rgba(22,33,27,.07) 1.6px, transparent 1.6px);
+  background-size: 22px 22px;
+}
+
+/* Scroll-reveal (main.js IntersectionObserver bilan ishlaydi) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* line-clamp fallback (agar Tailwind plugin ulanmagan bo'lsa) */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Kamroq harakatni afzal ko'rganlar uchun */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

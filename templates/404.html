@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+  <div class="font-display text-7xl sm:text-8xl font-bold text-foam mb-4">404</div>
+  <div class="text-5xl mb-6">🧽</div>
+  <h1 class="font-display text-2xl sm:text-3xl font-bold text-ink mb-4">Sahifa topilmadi</h1>
+  <p class="text-ink/50 mb-8">Siz izlayotgan sahifa mavjud emas yoki o'chirilgan bo'lishi mumkin.</p>
+  <a href="{% url 'shop:home' %}" class="inline-flex items-center gap-2 rounded-full bg-ink text-foam font-semibold px-7 py-3 hover:bg-scrub hover:text-white transition-all duration-300">
+    Bosh sahifaga qaytish
+  </a>
+</section>
+{% endblock %}

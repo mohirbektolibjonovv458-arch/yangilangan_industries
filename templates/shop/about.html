@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="bg-ink py-16 sm:py-24 text-center relative overflow-hidden">
+  <div class="absolute inset-0 bubble-field opacity-[0.08] pointer-events-none"></div>
+  <div class="relative max-w-3xl mx-auto px-4">
+     <span class="text-foam font-mono font-semibold text-xs uppercase tracking-[.14em]">Korxona haqida</span>
+     <h1 class="font-display text-[28px] sm:text-4xl lg:text-5xl font-bold mt-4 mb-4 text-white">Biz haqimizda</h1>
+    <p class="text-white/60 text-lg">{{ settings.about_short|default:"Sifat va ishonchni har bir mahsulotimizda his qiling." }}</p>
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+  <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-20 sm:mb-28 reveal">
+    <div>
+      <span class="text-scrub font-mono font-semibold text-xs uppercase tracking-[.14em]">Kim biz?</span>
+      <h2 class="font-display text-2xl sm:text-3xl font-bold text-ink mt-3 mb-5">Ishonchli hamkoringiz</h2>
+      <div class="text-ink/60 leading-relaxed space-y-4">
+        {{ settings.about_text|default:"Korxonamiz idish yuvish gubkalari ishlab chiqarish sohasida ixtisoslashgan bo'lib, mijozlarimizga faqat yuqori sifatli mahsulotlarni taqdim etadi."|linebreaks }}
+      </div>
+    </div>
+    <div class="relative">
+      <div class="absolute -inset-4 rounded-full bg-foam/20 blur-3xl"></div>
+      {% with about_images|first as first_img %}
+      {% if first_img %}
+        <div class="blob-frame relative aspect-square shadow-xl">
+          <img src="{{ first_img.image.url }}" alt="{{ first_img.caption }}" class="w-full h-full object-cover">
+        </div>
+      {% else %}
+        <div class="blob-frame relative aspect-square bg-scrub-light shadow-xl flex items-center justify-center text-6xl">🧽</div>
+      {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+
+  {% if about_images|length > 1 %}
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-20 sm:mb-28 reveal">
+    {% for img in about_images|slice:"1:5" %}
+      <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="rounded-2xl object-cover w-full aspect-square border border-line hover:border-scrub transition-colors duration-300">
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Ishlab chiqarish jarayoni -->
+  <div class="rounded-[2rem] bg-scrub text-white p-8 sm:p-14 mb-20 sm:mb-28 reveal">
+    <span class="text-foam font-mono font-semibold text-xs uppercase tracking-[.14em]">Jarayon</span>
+    <h2 class="font-display text-2xl sm:text-3xl font-bold mt-3 mb-5">Ishlab chiqarish jarayoni</h2>
+    <div class="text-white/75 leading-relaxed space-y-4 max-w-3xl">
+      {{ settings.production_process|default:"Xomashyoni tanlashdan tortib, tayyor mahsulotni qadoqlashgacha bo'lgan barcha bosqichlarda qat'iy sifat nazorati amalga oshiriladi."|linebreaks }}
+    </div>
+  </div>
+
+  <!-- Nima uchun bizni tanlashadi -->
+  <div class="reveal">
+    <span class="text-scrub font-mono font-semibold text-xs uppercase tracking-[.14em]">Afzalliklar</span>
+    <h2 class="font-display text-2xl sm:text-3xl font-bold text-ink mt-3 mb-8 sm:mb-10">Nima uchun bizni tanlashadi</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+      <div class="rounded-2xl border border-line p-6 hover:border-scrub hover:-translate-y-1 transition-all duration-300">
+        <div class="w-12 h-12 rounded-full bg-foam-light flex items-center justify-center text-2xl mb-4">✅</div>
+        <h3 class="font-display font-semibold text-ink mb-2">Yuqori sifat</h3>
+        <p class="text-sm text-ink/50">Har bir mahsulot qat'iy nazoratdan o'tadi.</p>
+      </div>
+      <div class="rounded-2xl border border-line p-6 hover:border-scrub hover:-translate-y-1 transition-all duration-300">
+        <div class="w-12 h-12 rounded-full bg-scrub-light flex items-center justify-center text-2xl mb-4">💰</div>
+        <h3 class="font-display font-semibold text-ink mb-2">Qulay narxlar</h3>
+        <p class="text-sm text-ink/50">Ishlab chiqaruvchidan to'g'ridan-to'g'ri optom narxlar.</p>
+      </div>
+      <div class="rounded-2xl border border-line p-6 hover:border-scrub hover:-translate-y-1 transition-all duration-300">
+        <div class="w-12 h-12 rounded-full bg-foam-light flex items-center justify-center text-2xl mb-4">🚚</div>
+        <h3 class="font-display font-semibold text-ink mb-2">Tezkor yetkazib berish</h3>
+        <p class="text-sm text-ink/50">Buyurtmalar belgilangan muddatda yetkaziladi.</p>
+      </div>
+    </div>
+    {% if settings.why_choose_us %}
+      <div class="mt-8 text-ink/60 leading-relaxed">{{ settings.why_choose_us|linebreaks }}</div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

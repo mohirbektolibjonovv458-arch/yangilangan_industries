@@ -1,0 +1,62 @@
+{% load static %}
+<header class="sticky top-0 z-50 bg-paper/90 backdrop-blur-md border-b border-line transition-shadow duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 sm:h-[76px]">
+
+      <!-- Logo + Kompaniya nomi -->
+      <a href="{% url 'shop:home' %}" class="flex items-center gap-2.5 md:gap-3 shrink-0 group">
+        {% if site_settings.logo %}
+          <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" class="h-9 w-9 md:h-10 md:w-10 rounded-full object-cover ring-2 ring-foam/50 group-hover:ring-scrub transition">
+        {% else %}
+          <div class="h-9 w-9 md:h-10 md:w-10 rounded-full bg-ink flex items-center justify-center text-foam font-display font-bold text-base">
+            {{ site_settings.site_name|slice:":1" }}
+          </div>
+        {% endif %}
+        <span class="text-[13px] sm:text-lg font-display font-bold text-ink tracking-tight">{{ site_settings.site_name|default:"Sponge Industries" }}</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-1">
+        <a href="{% url 'shop:home' %}" class="nav-link">Bosh sahifa</a>
+        <a href="{% url 'shop:product_list' %}" class="nav-link">Mahsulotlar</a>
+        <a href="{% url 'shop:about' %}" class="nav-link">Biz haqimizda</a>
+        <a href="{% url 'shop:wholesale_order' %}" class="nav-link">Optom buyurtma</a>
+        <a href="{% url 'shop:contact' %}" class="nav-link">Bog'lanish</a>
+      </nav>
+
+      <div class="hidden lg:flex items-center gap-4">
+        {% if site_settings.phone %}
+        <a href="tel:{{ site_settings.phone }}" class="text-sm font-mono font-semibold text-ink/70 hover:text-scrub transition">{{ site_settings.phone }}</a>
+        {% endif %}
+        <a href="{% url 'shop:wholesale_order' %}" class="inline-flex items-center gap-1.5 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-foam hover:bg-scrub hover:text-white transition-all duration-300">
+          Buyurtma berish
+        </a>
+      </div>
+
+      <!-- Hamburger button (mobile/tablet) -->
+      <button id="hamburger-btn" type="button" aria-label="Menyuni ochish" aria-expanded="false"
+         class="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-line/50 transition">
+        <span class="sr-only">Menyu</span>
+        <div class="w-6 flex flex-col gap-1.5">
+           <span class="hamburger-bar block h-0.5 w-6 bg-ink transition-all duration-300 origin-center"></span>
+           <span class="hamburger-bar block h-0.5 w-6 bg-ink transition-all duration-300"></span>
+           <span class="hamburger-bar block h-0.5 w-6 bg-ink transition-all duration-300 origin-center"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <nav id="mobile-menu" class="lg:hidden hidden bg-paper border-t border-line">
+    <div class="px-4 py-3 flex flex-col gap-1">
+       <a href="{% url 'shop:home' %}" class="mobile-nav-link">Bosh sahifa</a>
+      <a href="{% url 'shop:product_list' %}" class="mobile-nav-link">Mahsulotlar</a>
+      <a href="{% url 'shop:about' %}" class="mobile-nav-link">Biz haqimizda</a>
+      <a href="{% url 'shop:wholesale_order' %}" class="mobile-nav-link">Optom buyurtma</a>
+       <a href="{% url 'shop:contact' %}" class="mobile-nav-link">Bog'lanish</a>
+      {% if site_settings.phone %}
+      <a href="tel:{{ site_settings.phone }}" class="mobile-nav-link font-mono font-semibold text-scrub">{{ site_settings.phone }}</a>
+      {% endif %}
+    </div>
+  </nav>
+</header>

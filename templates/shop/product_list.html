@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+
+  <div class="mb-8 sm:mb-10">
+    <span class="text-scrub font-mono font-semibold text-xs uppercase tracking-[.14em]">Katalog</span>
+    <h1 class="font-display text-[26px] sm:text-4xl font-bold text-ink mt-3">Mahsulotlar</h1>
+  </div>
+
+  <!-- Qidiruv va filter -->
+  <form method="get" class="flex flex-col lg:flex-row gap-3 mb-8 sm:mb-10 bg-scrub-light/60 rounded-2xl p-3 sm:p-5">
+    <div class="flex-1 relative">
+      <input type="text" name="q" value="{{ query }}" placeholder="Mahsulot nomini qidirish..."
+             class="w-full !border-line pl-11 pr-4">
+      <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ink/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+      </svg>
+    </div>
+
+    <select name="category" onchange="this.form.submit()" class="!border-line sm:w-64">
+      <option value="">Barcha kategoriyalar</option>
+      {% for cat in categories %}
+        <option value="{{ cat.slug }}" {% if active_category.slug == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit" class="rounded-full bg-ink text-foam font-semibold px-6 py-3 hover:bg-scrub hover:text-white transition-colors duration-300">
+      Qidirish
+    </button>
+    {% if query or active_category %}
+      <a href="{% url 'shop:product_list' %}" class="rounded-full border border-line text-ink/50 font-medium px-6 py-3 text-center hover:bg-white transition-colors duration-300">
+        Tozalash
+      </a>
+    {% endif %}
+  </form>
+
+  <!-- Kategoriya tez tanlash chip'lari -->
+  <div class="flex flex-wrap gap-2 mb-8">
+    <a href="{% url 'shop:product_list' %}" class="chip {% if not active_category %}chip-active{% endif %}">Barchasi</a>
+    {% for cat in categories %}
+      <a href="?category={{ cat.slug }}" class="chip {% if active_category.slug == cat.slug %}chip-active{% endif %}">{{ cat.name }}</a>
+    {% endfor %}
+  </div>
+
+  {% if products %}
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+      {% for product in products %}
+        {% include 'shop/_product_card.html' %}
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="flex justify-center items-center gap-2 mt-12 flex-wrap">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if active_category %}&category={{ active_category.slug }}{% endif %}"
+           class="page-btn">←</a>
+      {% endif %}
+      {% for num in page_obj.paginator.page_range %}
+        <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if active_category %}&category={{ active_category.slug }}{% endif %}"
+           class="page-btn {% if num == page_obj.number %}page-btn-active{% endif %}">{{ num }}</a>
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if active_category %}&category={{ active_category.slug }}{% endif %}"
+           class="page-btn">→</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  {% else %}
+    <div class="text-center py-20">
+       <div class="text-5xl mb-4 text-scrub/30" aria-hidden="true">⌕</div>
+      <p class="text-ink/40 text-lg">Hech qanday mahsulot topilmadi.</p>
+    </div>
+  {% endif %}
+
+</section>
+{% endblock %}

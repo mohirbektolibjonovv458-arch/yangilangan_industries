@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden">
+  <div class="absolute inset-0 bubble-field opacity-40 pointer-events-none"></div>
+
+  {% if banners %}
+    <div class="relative">
+      {% for banner in banners %}
+        <div class="{% if not forloop.first %}hidden{% endif %} banner-slide" data-slide="{{ forloop.counter0 }}">
+          <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14 sm:py-24 grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+            <div class="order-2 md:order-1 animate-fadeInUp">
+              <p class="mb-4 inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-[.14em] text-scrub bg-scrub-light rounded-full px-3 py-1.5">
+                Ishlab chiqaruvchidan to'g'ridan-to'g'ri
+              </p>
+              <h1 class="font-display text-[30px] sm:text-5xl lg:text-6xl font-bold leading-[1.06] mb-5 text-ink">{{ banner.title }}</h1>
+              {% if banner.subtitle %}<p class="text-ink/60 text-base sm:text-lg mb-8 max-w-lg leading-relaxed">{{ banner.subtitle }}</p>{% endif %}
+              <div class="flex flex-wrap gap-3">
+                <a href="{% url 'shop:product_list' %}" class="inline-flex items-center gap-2 rounded-full bg-ink text-foam font-semibold px-6 py-3.5 hover:bg-scrub hover:text-white transition-all duration-300">
+                  Katalogni ko'rish
+                </a>
+                <a href="{% url 'shop:wholesale_order' %}" class="inline-flex items-center gap-2 rounded-full border-2 border-ink/15 text-ink font-semibold px-6 py-3.5 hover:border-ink transition-all duration-300">
+                  Optom buyurtma
+                </a>
+              </div>
+            </div>
+            <div class="order-1 md:order-2">
+              <div class="relative max-w-md mx-auto">
+                <div class="absolute -inset-6 rounded-full bg-foam/25 blur-3xl animate-blobMorph"></div>
+                <div class="blob-frame relative animate-blobMorph shadow-xl">
+                  <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="relative w-full aspect-square object-cover">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% if banners|length > 1 %}
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      {% for banner in banners %}
+        <button class="banner-dot w-2 h-2 rounded-full bg-ink/20 hover:bg-ink transition {% if forloop.first %}!bg-ink{% endif %}" data-dot="{{ forloop.counter0 }}"></button>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% else %}
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-10 items-center">
+      <div class="text-center md:text-left animate-fadeInUp">
+        <p class="mb-4 inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-[.14em] text-scrub bg-scrub-light rounded-full px-3 py-1.5">
+          Ishlab chiqaruvchidan to'g'ridan-to'g'ri
+        </p>
+        <h1 class="font-display text-[30px] sm:text-5xl lg:text-6xl font-bold text-ink leading-[1.06] mb-5">{{ site_settings.site_name }}</h1>
+        <p class="text-ink/60 text-base sm:text-lg max-w-lg mx-auto md:mx-0 mb-8 leading-relaxed">{{ site_settings.about_short|default:"Sifatli idish yuvish gubkalari — ishlab chiqaruvchidan to'g'ridan-to'g'ri, eng qulay optom narxlarda." }}</p>
+        <div class="flex flex-wrap justify-center md:justify-start gap-3">
+          <a href="{% url 'shop:wholesale_order' %}" class="rounded-full bg-ink text-foam font-semibold px-6 py-3.5 hover:bg-scrub hover:text-white transition-all duration-300">Optom buyurtma</a>
+          <a href="{% url 'shop:contact' %}" class="rounded-full border-2 border-ink/15 text-ink font-semibold px-6 py-3.5 hover:border-ink transition-all duration-300">Bog'lanish</a>
+        </div>
+      </div>
+      <div class="relative hidden md:block">
+        <div class="absolute -inset-6 rounded-full bg-foam/25 blur-3xl animate-blobMorph"></div>
+        <div class="blob-frame relative aspect-square bg-scrub-light animate-blobMorph shadow-xl flex items-center justify-center">
+          <span class="text-6xl" aria-hidden="true">🧽</span>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<!-- ============ KOMPANIYA HAQIDA QISQA MA'LUMOT ============ -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 border-t border-line">
+  <div class="grid md:grid-cols-3 gap-8 md:gap-10 items-start reveal">
+    <div class="md:col-span-2">
+      <span class="text-scrub font-mono font-semibold text-[11px] uppercase tracking-[.14em]">Kompaniya haqida</span>
+      <h2 class="font-display text-[24px] sm:text-3xl font-bold text-ink mt-3 mb-4">{{ site_settings.site_name|default:"Sponge Industries" }} bilan tanishing</h2>
+      <p class="text-ink/60 text-sm sm:text-base leading-relaxed max-w-2xl">{{ site_settings.about_short|default:"Biz zamonaviy uskunalar yordamida yuqori sifatli idish yuvish gubkalari ishlab chiqaramiz. Mahsulotlarimiz mustahkam, gigienik va uzoq muddat xizmat qiladi." }}</p>
+      <a href="{% url 'shop:about' %}" class="inline-flex items-center gap-1.5 mt-5 text-ink font-semibold text-sm border-b-2 border-foam pb-0.5 hover:gap-2.5 hover:border-scrub transition-all duration-300">
+        Batafsil o'qish <span aria-hidden="true">→</span>
+      </a>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div class="rounded-2xl bg-foam-light p-4 sm:p-5">
+        <div class="font-mono text-2xl sm:text-3xl font-bold text-ink">22+</div>
+        <div class="text-xs sm:text-sm text-ink/50 mt-1">Turdagi mahsulot</div>
+      </div>
+      <div class="rounded-2xl bg-scrub-light p-4 sm:p-5">
+        <div class="font-mono text-2xl sm:text-3xl font-bold text-ink">100%</div>
+        <div class="text-xs sm:text-sm text-ink/50 mt-1">Sifat nazorati</div>
+      </div>
+      <div class="rounded-2xl bg-scrub-light p-4 sm:p-5">
+        <div class="font-mono text-2xl sm:text-3xl font-bold text-ink">5000+</div>
+        <div class="text-xs sm:text-sm text-ink/50 mt-1">Mamnun mijoz</div>
+      </div>
+      <div class="rounded-2xl bg-foam-light p-4 sm:p-5">
+        <div class="font-mono text-2xl sm:text-3xl font-bold text-ink">5 yil+</div>
+        <div class="text-xs sm:text-sm text-ink/50 mt-1">Bozordagi tajriba</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENG MASHHUR MAHSULOTLAR ============ -->
+<section class="bg-ink py-14 sm:py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8 sm:mb-12 gap-3 reveal">
+      <div>
+        <span class="text-foam font-mono font-semibold text-[11px] uppercase tracking-[.14em]">Katalog</span>
+        <h2 class="font-display text-[24px] sm:text-3xl font-bold text-white mt-3">Eng mashhur mahsulotlar</h2>
+      </div>
+      <a href="{% url 'shop:product_list' %}" class="text-foam font-semibold hover:underline whitespace-nowrap">Barchasini ko'rish →</a>
+    </div>
+
+    {% if featured_products %}
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 reveal">
+      {% for product in featured_products %}
+        {% include 'shop/_product_card.html' %}
+      {% endfor %}
+    </div>
+    {% else %}
+      <p class="text-white/50">Hozircha mahsulotlar qo'shilmagan.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+  <div class="relative overflow-hidden rounded-[2rem] bg-foam px-6 sm:px-12 py-12 sm:py-16 text-center reveal">
+    <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/25 blur-2xl"></div>
+    <h2 class="relative font-display text-2xl sm:text-4xl font-bold text-ink mb-4">Optom buyurtma bermoqchimisiz?</h2>
+    <p class="relative text-ink/70 mb-8 max-w-xl mx-auto">Ishlab chiqaruvchidan to'g'ridan-to'g'ri, eng qulay narxlarda mahsulot xarid qiling.</p>
+    <div class="relative flex flex-wrap justify-center gap-4">
+      <a href="{% url 'shop:wholesale_order' %}" class="rounded-full bg-ink text-foam font-semibold px-7 py-3.5 hover:bg-scrub hover:text-white transition-all duration-300">Optom buyurtma</a>
+      <a href="{% url 'shop:contact' %}" class="rounded-full border-2 border-ink/30 text-ink font-semibold px-7 py-3.5 hover:border-ink transition-all duration-300">Bog'lanish</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Oddiy banner slayder
+  (function () {
+    const slides = document.querySelectorAll('.banner-slide');
+    const dots = document.querySelectorAll('.banner-dot');
+    if (slides.length < 2) return;
+    let current = 0;
+    function show(i) {
+      slides.forEach((s, idx) => s.classList.toggle('hidden', idx !== i));
+      dots.forEach((d, idx) => d.classList.toggle('!bg-ink', idx === i));
+      current = i;
+    }
+    dots.forEach(dot => dot.addEventListener('click', () => show(parseInt(dot.dataset.dot))));
+    setInterval(() => show((current + 1) % slides.length), 5000);
+  })();
+</script>
+{% endblock %}

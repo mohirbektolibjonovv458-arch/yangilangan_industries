@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+
+  <div class="mb-10 sm:mb-14 text-center max-w-2xl mx-auto">
+    <span class="text-scrub font-mono font-semibold text-xs uppercase tracking-[.14em]">Aloqa</span>
+    <h1 class="font-display text-[26px] sm:text-4xl font-bold text-ink mt-3 mb-3">Biz bilan bog'laning</h1>
+    <p class="text-ink/50">Savollaringiz bo'lsa, quyidagi kontaktlar orqali yoki forma to'ldirib murojaat qiling.</p>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-8 sm:gap-10">
+
+    <!-- Kontakt ma'lumotlari + Xarita -->
+    <div class="space-y-6">
+      <div class="grid sm:grid-cols-2 gap-4">
+        {% if site_settings.phone %}
+        <a href="tel:{{ site_settings.phone }}" class="contact-card">
+           <span class="text-2xl text-scrub" aria-hidden="true">📞</span>
+          <div>
+            <div class="text-xs font-mono text-ink/40">Telefon</div>
+            <div class="font-semibold text-ink">{{ site_settings.phone }}</div>
+          </div>
+        </a>
+        {% endif %}
+        {% if site_settings.telegram %}
+        <a href="https://t.me/{{ site_settings.telegram|cut:'@' }}" target="_blank" rel="noopener" class="contact-card">
+           <span class="text-2xl text-scrub" aria-hidden="true">➤</span>
+          <div>
+            <div class="text-xs font-mono text-ink/40">Telegram</div>
+            <div class="font-semibold text-ink">{{ site_settings.telegram }}</div>
+          </div>
+        </a>
+        {% endif %}
+        {% if site_settings.email %}
+        <a href="mailto:{{ site_settings.email }}" class="contact-card">
+           <span class="text-2xl text-scrub" aria-hidden="true">✉</span>
+          <div>
+            <div class="text-xs font-mono text-ink/40">Email</div>
+            <div class="font-semibold text-ink">{{ site_settings.email }}</div>
+          </div>
+        </a>
+        {% endif %}
+        {% if site_settings.address %}
+        <div class="contact-card">
+           <span class="text-2xl text-scrub" aria-hidden="true">📍</span>
+          <div>
+            <div class="text-xs font-mono text-ink/40">Manzil</div>
+            <div class="font-semibold text-ink">{{ site_settings.address }}</div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if site_settings.google_map_embed %}
+        <div class="rounded-2xl overflow-hidden border border-line aspect-video [&>iframe]:w-full [&>iframe]:h-full">
+          {{ site_settings.google_map_embed|safe }}
+        </div>
+      {% else %}
+        <div class="rounded-2xl bg-scrub-light aspect-video flex items-center justify-center text-ink/30">
+          Google xarita admin panelda sozlanmagan
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Kontakt forma -->
+       <div class="bg-white rounded-2xl border border-line p-5 sm:p-8">
+      <h2 class="font-display text-xl font-bold text-ink mb-6">Xabar yuborish</h2>
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% for field in form %}
+          <div>
+            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-ink/70 mb-1.5">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+            {{ field }}
+            {% if field.errors %}
+              <p class="text-red-500 text-xs mt-1">{{ field.errors|striptags }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+         <button type="submit" class="w-full rounded-full bg-ink text-foam font-semibold py-3.5 hover:bg-scrub hover:text-white transition-all duration-300">
+          Yuborish
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

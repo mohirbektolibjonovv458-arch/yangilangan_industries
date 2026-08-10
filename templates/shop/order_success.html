@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+  <div class="w-20 h-20 rounded-full bg-scrub-light flex items-center justify-center text-4xl mx-auto mb-6 animate-fadeInUp">✅</div>
+  <h1 class="font-display text-2xl sm:text-3xl font-bold text-ink mb-4">Buyurtmangiz qabul qilindi!</h1>
+  <p class="text-ink/50 mb-8">Menejerlarimiz tez orada siz bilan bog'lanadi. E'tiboringiz uchun rahmat.</p>
+  <div class="flex flex-wrap justify-center gap-4">
+    <a href="{% url 'shop:home' %}" class="rounded-full bg-ink text-foam font-semibold px-7 py-3 hover:bg-scrub hover:text-white transition-colors duration-300">Bosh sahifaga qaytish</a>
+    <a href="{% url 'shop:product_list' %}" class="rounded-full border-2 border-ink/15 text-ink font-semibold px-7 py-3 hover:border-ink transition-all duration-300">Boshqa mahsulotlar</a>
+  </div>
+</section>
+{% endblock %}

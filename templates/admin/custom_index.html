@@ -1,0 +1,63 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block content_title %}<h1>Dashboard</h1>{% endblock %}
+
+{% block content %}
+<div class="dashboard-stats" style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:28px;">
+  <div style="flex:1;min-width:180px;background:#0369a1;color:#fff;border-radius:10px;padding:20px;">
+    <div style="font-size:28px;font-weight:700;">{{ total_products }}</div>
+    <div style="opacity:.85;font-size:13px;">Jami mahsulotlar</div>
+  </div>
+  <div style="flex:1;min-width:180px;background:#16a34a;color:#fff;border-radius:10px;padding:20px;">
+    <div style="font-size:28px;font-weight:700;">{{ total_orders }}</div>
+    <div style="opacity:.85;font-size:13px;">Jami buyurtmalar</div>
+  </div>
+  <div style="flex:1;min-width:180px;background:#f59e0b;color:#fff;border-radius:10px;padding:20px;">
+    <div style="font-size:28px;font-weight:700;">{{ new_orders }}</div>
+    <div style="opacity:.85;font-size:13px;">Yangi buyurtmalar</div>
+  </div>
+  <div style="flex:1;min-width:180px;background:#0ea5e9;color:#fff;border-radius:10px;padding:20px;">
+    <div style="font-size:28px;font-weight:700;">{{ total_categories }}</div>
+    <div style="opacity:.85;font-size:13px;">Kategoriyalar</div>
+  </div>
+  <div style="flex:1;min-width:180px;background:#64748b;color:#fff;border-radius:10px;padding:20px;">
+    <div style="font-size:28px;font-weight:700;">{{ unread_messages }}</div>
+    <div style="opacity:.85;font-size:13px;">O'qilmagan xabarlar</div>
+  </div>
+</div>
+
+<div style="background:#fff;border:1px solid #eee;border-radius:10px;padding:20px;margin-bottom:28px;">
+  <h2 style="margin-top:0;">So'nggi buyurtmalar</h2>
+  {% if recent_orders %}
+  <table style="width:100%;border-collapse:collapse;">
+    <thead>
+      <tr style="text-align:left;border-bottom:1px solid #eee;">
+        <th style="padding:8px 4px;">Ism</th>
+        <th style="padding:8px 4px;">Telefon</th>
+        <th style="padding:8px 4px;">Mahsulot</th>
+        <th style="padding:8px 4px;">Miqdor</th>
+        <th style="padding:8px 4px;">Holati</th>
+        <th style="padding:8px 4px;">Sana</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in recent_orders %}
+      <tr style="border-bottom:1px solid #f3f3f3;">
+        <td style="padding:8px 4px;">{{ order.name }}</td>
+        <td style="padding:8px 4px;">{{ order.phone }}</td>
+        <td style="padding:8px 4px;">{{ order.product|default:"—" }}</td>
+        <td style="padding:8px 4px;">{{ order.quantity }}</td>
+        <td style="padding:8px 4px;">{{ order.get_status_display }}</td>
+        <td style="padding:8px 4px;">{{ order.created_at|date:"d.m.Y H:i" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>Hozircha buyurtmalar mavjud emas.</p>
+  {% endif %}
+</div>
+
+{{ block.super }}
+{% endblock %}
